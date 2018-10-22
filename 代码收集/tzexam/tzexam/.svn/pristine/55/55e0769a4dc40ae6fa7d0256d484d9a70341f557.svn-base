@@ -1,0 +1,32 @@
+package com.tz.web;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.tz.dao.ExamDao;
+import com.tz.dao.TzParams;
+
+
+@Controller
+@RequestMapping("/admin/exam")
+public class ExamController {
+	 
+	@Autowired
+	private ExamDao examDao;
+	
+	@RequestMapping(value="/list")
+	public String list(TzParams params,HttpServletRequest request,HttpSession session){
+		List<Object[]> exams = examDao.findExams(params);
+		request.setAttribute("exams",exams);
+		return "template";
+	}
+	
+
+}
